@@ -10,8 +10,13 @@ spring:
             ddl-auto: update
     jmx:
         enabled: false
+    liquibase:
+        enabled: false
+        user: todoapp
+        password: todoapp
+        locations: classpath:db/migration
+        url: jdbc:postgresql://localhost:5432/todoapp
     datasource:
-        url:
-            jdbc:postgresql://localhost:5432/todoapp
+        url: jdbc:postgresql://localhost:5432/todoapp
         username: todoapp
         password: todoapp
