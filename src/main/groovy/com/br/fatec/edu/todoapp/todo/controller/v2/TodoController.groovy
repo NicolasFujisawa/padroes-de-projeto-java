@@ -1,21 +1,16 @@
-package com.br.fatec.edu.todoapp.todo.controller.v1
+package com.br.fatec.edu.todoapp.todo.controller.v2
 
+import com.br.fatec.edu.todoapp.todo.controller.v2.converter.TodoConverter
 import com.br.fatec.edu.todoapp.todo.model.Todo
 import com.br.fatec.edu.todoapp.todo.service.TodoService
+import com.br.fatec.edu.todoapp.todo.view.TodoJson
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("v1/todo")
+@RequestMapping("v2/todo")
 class TodoController {
     
     @Autowired
@@ -27,7 +22,8 @@ class TodoController {
     }
     
     @PostMapping
-    ResponseEntity<Todo> saveTodo(@RequestBody Todo todo) {
+    ResponseEntity<Todo> saveTodo(@RequestBody TodoJson todoJson) {
+        Todo todo = TodoConverter.convertFrom(todoJson)
         new ResponseEntity<Todo>(todoService.saveTodo(todo), HttpStatus.CREATED)
     }
 

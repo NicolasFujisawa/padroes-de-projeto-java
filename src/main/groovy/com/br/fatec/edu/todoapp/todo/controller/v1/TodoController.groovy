@@ -2,6 +2,7 @@ package com.br.fatec.edu.todoapp.todo.controller.v1
 
 import com.br.fatec.edu.todoapp.todo.model.Todo
 import com.br.fatec.edu.todoapp.todo.service.TodoService
+import com.br.fatec.edu.todoapp.todo.view.TodoJson
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
