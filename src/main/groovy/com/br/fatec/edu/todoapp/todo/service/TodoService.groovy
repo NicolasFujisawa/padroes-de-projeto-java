@@ -9,5 +9,5 @@ interface TodoService {
 
     Todo saveTodo(Todo todo)
     
-    Todo deleteTodoById(Integer todoId)
+    void deleteTodoById(Integer todoId)
 }

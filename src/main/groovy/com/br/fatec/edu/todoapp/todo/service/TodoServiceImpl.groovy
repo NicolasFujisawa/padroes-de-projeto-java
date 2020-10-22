@@ -18,16 +18,17 @@ class TodoServiceImpl implements TodoService {
 
     @Override
     Todo findById(Integer todoId) {
-        todoRepository.findById todoId get()
+        todoRepository.findById(todoId).get()
     }
 
     @Override
     Todo saveTodo(Todo todo) {
+        println todo.images
         todoRepository.save todo
     }
 
     @Override
-    Todo deleteTodoById(Integer todoId) {
+    void deleteTodoById(Integer todoId) {
         todoRepository.deleteById(todoId)
     }
 }

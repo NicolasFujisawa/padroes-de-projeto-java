@@ -1,5 +1,6 @@
-CREATE TABLE todo (
+CREATE TABLE todos (
 	id serial PRIMARY KEY,
-	task VARCHAR ( 50 ) ,
-	is_completed BOOLEAN
+	task VARCHAR ( 255 ) ,
+	is_completed BOOLEAN,
+	
 );

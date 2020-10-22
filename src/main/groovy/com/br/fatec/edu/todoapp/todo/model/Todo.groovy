@@ -2,6 +2,7 @@ package com.br.fatec.edu.todoapp.todo.model
 
 import com.br.fatec.edu.todoapp.image.model.Image
 import groovy.transform.EqualsAndHashCode
+import groovy.transform.ToString
 import groovy.transform.TupleConstructor
 
 import javax.persistence.Column
@@ -17,6 +18,7 @@ import javax.persistence.Table
 @Table(name = 'todos')
 @EqualsAndHashCode
 @TupleConstructor
+@ToString
 class Todo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

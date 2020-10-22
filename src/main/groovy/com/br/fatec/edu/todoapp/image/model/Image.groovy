@@ -2,6 +2,7 @@ package com.br.fatec.edu.todoapp.image.model
 
 import com.br.fatec.edu.todoapp.todo.model.Todo
 import groovy.transform.EqualsAndHashCode
+import groovy.transform.ToString
 import groovy.transform.TupleConstructor
 
 import javax.persistence.Column
@@ -18,6 +19,7 @@ import javax.persistence.Table
 @Table(name = 'images')
 @EqualsAndHashCode
 @TupleConstructor
+@ToString
 class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
