@@ -23,8 +23,7 @@ class TodoServiceImpl implements TodoService {
 
     @Override
     Todo saveTodo(Todo todo) {
-        println todo.images
-        todoRepository.save todo
+        todoRepository.save(todo)
     }
 
     @Override

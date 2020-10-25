@@ -5,6 +5,7 @@ import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 import groovy.transform.TupleConstructor
 
+import javax.persistence.CascadeType
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.FetchType
@@ -19,7 +20,7 @@ import javax.persistence.Table
 @EqualsAndHashCode
 @TupleConstructor
 @ToString
-class Todo {
+class Todo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id
@@ -30,6 +31,6 @@ class Todo {
     @Column(name = 'is_completed')
     Boolean isCompleted
     
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "todo")
+    @OneToMany(mappedBy = "todo", cascade = CascadeType.PERSIST, orphanRemoval = true)
     List<Image> images
 }

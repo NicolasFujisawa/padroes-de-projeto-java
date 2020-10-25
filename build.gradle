@@ -24,6 +24,7 @@ dependencies {
 	implementation 'org.codehaus.groovy:groovy'
 	implementation 'org.liquibase:liquibase-core'
 	compileOnly 'org.projectlombok:lombok'
+    compileOnly 'ch.qos.logback:logback-classic'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.h2database:h2'
     runtimeOnly(group: 'org.postgresql', name: 'postgresql', version: '42.2.16')
