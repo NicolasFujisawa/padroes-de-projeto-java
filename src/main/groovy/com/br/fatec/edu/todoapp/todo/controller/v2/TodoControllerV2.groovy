@@ -1,9 +1,9 @@
 package com.br.fatec.edu.todoapp.todo.controller.v2
 
-import com.br.fatec.edu.todoapp.todo.controller.v2.converter.TodoConverter
+import com.br.fatec.edu.todoapp.todo.view.TodoConverter
 import com.br.fatec.edu.todoapp.todo.model.Todo
 import com.br.fatec.edu.todoapp.todo.service.TodoService
-import com.br.fatec.edu.todoapp.todo.view.TodoJson
+import com.br.fatec.edu.todoapp.todo.view.ResponseTodo
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -17,23 +17,23 @@ class TodoControllerV2 {
     
     @GetMapping
     ResponseEntity<Object> getAllTodoList() {
-        List<TodoJson> todosJson = TodoConverter.convertAllFromTodo(todoService.findAll())
+        List<ResponseTodo> todosJson = TodoConverter.renderManyFromTodo(todoService.findAll())
         System.out.println(todosJson) 
         ResponseEntity.ok(todosJson)
     }
     
     @PostMapping
-    ResponseEntity<TodoJson> saveTodo(@RequestBody TodoJson todoJson) {
-        Todo todo = TodoConverter.convertFromJson(todoJson)
-        TodoJson responseJson = TodoConverter.convertFromTodo(todoService.saveTodo(todo))
+    ResponseEntity<ResponseTodo> saveTodo(@RequestBody ResponseTodo todoJson) {
+        Todo todo = TodoConverter.renderFromJson(todoJson)
+        ResponseTodo responseJson = TodoConverter.renderFromTodo(todoService.saveTodo(todo))
         ResponseEntity.created().body(responseJson)
     }
 
     @PutMapping('/{todoId}')
-    ResponseEntity<TodoJson> updateTodo(@RequestBody TodoJson todoJson, @PathVariable Integer todoId){
-        Todo todo = TodoConverter.convertFromJson(todoJson)
+    ResponseEntity<ResponseTodo> updateTodo(@RequestBody ResponseTodo todoJson, @PathVariable Integer todoId){
+        Todo todo = TodoConverter.renderFromJson(todoJson)
         todo.setId(todoId)
-        TodoJson responseJson = TodoConverter.convertFromTodo(todoService.saveTodo(todo))
+        ResponseTodo responseJson = TodoConverter.renderFromTodo(todoService.saveTodo(todo))
         ResponseEntity.ok(responseJson)
     }
 
@@ -44,12 +44,12 @@ class TodoControllerV2 {
     }
 
     @GetMapping('/{todoId}')
-    ResponseEntity<TodoJson> getTodoById(@PathVariable Integer todoId){
+    ResponseEntity<ResponseTodo> getTodoById(@PathVariable Integer todoId){
         Todo saved = todoService.findById(todoId)
         if(!saved) {
             return ResponseEntity.notFound().build()
         }
-        ResponseEntity.ok(TodoConverter.convertFromTodo(saved))
+        ResponseEntity.ok(TodoConverter.renderFromTodo(saved))
     }
     
 }

@@ -7,7 +7,7 @@ import groovy.transform.TupleConstructor
 @EqualsAndHashCode
 @TupleConstructor
 @ToString
-class ImageJson {
+class ResponseImage {
     Integer id
     String url
 }
