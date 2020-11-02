@@ -19,7 +19,7 @@ import groovy.transform.TupleConstructor
 @Table(name = 'todos')
 @EqualsAndHashCode
 @TupleConstructor
-@ToString
+@ToString(excludes = ['images'])
 class Todo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,4 +33,13 @@ class Todo {
     
     @OneToMany(mappedBy = "todo", cascade = CascadeType.PERSIST, orphanRemoval = true)
     List<Image> images
+    
+    void removeImage(Image image) {
+        this.images.remove(image)
+    }
+
+    List<Image> addImage(Image image) {
+        this.images.add(image)
+        return this.images
+    }
 }

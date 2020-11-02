@@ -4,12 +4,11 @@ import com.br.fatec.edu.todoapp.image.view.ImageConverter
 import com.br.fatec.edu.todoapp.todo.model.Todo
 
 class TodoConverter {
-    static Todo renderFromJson(RequestTodo todoJson) {
+    static Todo renderFromJson(RequestTodo requestTodo) {
         Todo todo = new Todo()
-        todo.setTask(todoJson.task)
-        todo.setIsCompleted(todoJson.is_completed)
-        todo.setImages(ImageConverter.renderManyFromRequest(todoJson.images))
-        print(todo)
+        todo.setTask(requestTodo.task)
+        todo.setIsCompleted(requestTodo.is_completed)
+        todo.setImages(ImageConverter.renderManyFromRequest(requestTodo.images))
         return todo
     }
     
