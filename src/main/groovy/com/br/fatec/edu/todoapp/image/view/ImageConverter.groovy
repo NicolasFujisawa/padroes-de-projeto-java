@@ -3,8 +3,10 @@ package com.br.fatec.edu.todoapp.image.view
 import java.time.ZonedDateTime
 
 import com.br.fatec.edu.todoapp.image.model.Image
+import com.br.fatec.edu.todoapp.image.service.ImageStorageService
 
 import liquibase.util.file.FilenameUtils
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.multipart.MultipartFile
 
 class ImageConverter {
@@ -13,7 +15,8 @@ class ImageConverter {
     static Image renderFromRequest(MultipartFile multipartFile) {
         Image image = new Image()
         String extension = FilenameUtils.getExtension(multipartFile.originalFilename)
-        image.setPath("${ZonedDateTime.now().toInstant().toEpochMilli()}.${extension}")
+        String path = "${ZonedDateTime.now().toInstant().toEpochMilli()}.${extension}"
+        image.setPath(path)
         return image
     }
     

@@ -1,7 +1,9 @@
 package com.br.fatec.edu.todoapp.todo.controller.v3
 
+import javax.servlet.ServletContext
 
 import com.br.fatec.edu.todoapp.image.model.Image
+import com.br.fatec.edu.todoapp.image.service.ImageStorageService
 import com.br.fatec.edu.todoapp.todo.model.Todo
 import com.br.fatec.edu.todoapp.todo.service.TodoService
 import com.br.fatec.edu.todoapp.todo.view.RequestTodo
@@ -33,6 +35,9 @@ class TodoControllerV3 {
 
     @Autowired
     TodoService todoService
+    
+    @Autowired
+    ImageStorageService imageStorageService
 
     @GetMapping
     ResponseEntity<Object> list(@RequestParam("page") Integer page, @RequestParam("size") Integer size) {
@@ -47,9 +52,14 @@ class TodoControllerV3 {
     ResponseEntity<ResponseTodo> create(@ModelAttribute RequestTodo request) {
         LOGGER.info("Creating ${request.task} todo")
         Todo todo = TodoConverter.renderFromJson(request)
-    
+        int i = 0
         for(MultipartFile image : request.images) {
-            LOGGER.info("File name: ${image.contentType}")
+            LOGGER.info("File name: ${image.getOriginalFilename()}")
+            if(image.contentType.equalsIgnoreCase("image/jpg") 
+                    || image.getContentType().equalsIgnoreCase("image/jpeg")
+                    || image.getContentType().equalsIgnoreCase("image/png")) {
+                imageStorageService.save(image, todo.images.get(i++).path)
+            }
         }
 
         for(Image image : todo.images) {
