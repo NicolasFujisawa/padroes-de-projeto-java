@@ -17,6 +17,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ModelAttribute
@@ -40,6 +41,7 @@ class TodoControllerV3 {
     ImageStorageService imageStorageService
 
     @GetMapping
+    @CrossOrigin(origins = "http://localhost:3000")
     ResponseEntity<Object> list(@RequestParam("page") Integer page, @RequestParam("size") Integer size) {
         LOGGER.info("Listing all todos")
         Page<Todo> todos = todoService.findAll(PageRequest.of(page, size, Sort.by("id")))
@@ -49,6 +51,7 @@ class TodoControllerV3 {
     }
 
     @PostMapping
+    @CrossOrigin(origins = "http://localhost:3000")
     ResponseEntity<ResponseTodo> create(@ModelAttribute RequestTodo request) {
         LOGGER.info("Creating ${request.task} todo")
         Todo todo = TodoConverter.renderFromJson(request)
@@ -72,6 +75,7 @@ class TodoControllerV3 {
     }
     
     @GetMapping("/{todoId}")
+    @CrossOrigin(origins = "http://localhost:3000")
     ResponseEntity<ResponseTodo> show(@PathVariable Integer todoId) {
         LOGGER.info("Showing [${todoId}] todo")
         Todo todo = todoService.findById(todoId)
@@ -82,6 +86,7 @@ class TodoControllerV3 {
     }
     
     @DeleteMapping
+    @CrossOrigin(origins = "http://localhost:3000")
     ResponseEntity<ResponseTodo> delete(@RequestParam("id") Integer todoId) {
         LOGGER.info("Deleting [${todoId}] todo")
         todoService.deleteTodoById(todoId)
