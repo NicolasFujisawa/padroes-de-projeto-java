@@ -36,15 +36,15 @@ class TodoControllerV3 {
 
     @Autowired
     TodoService todoService
-    
+
     @Autowired
     ImageStorageService imageStorageService
 
     @GetMapping
     @CrossOrigin(origins = "http://localhost:3000")
     ResponseEntity<Object> list(@RequestParam("page") Integer page, @RequestParam("size") Integer size) {
-        LOGGER.info("Listing all todos")
-        Page<Todo> todos = todoService.findAll(PageRequest.of(page, size, Sort.by("id")))
+        LOGGER.info("Listing todos in page")
+        Page<Todo> todos = todoService.findAll(PageRequest.of(page, size, Sort.by("id").descending()))
         List<ResponseTodo> todosJson = TodoConverter.renderManyFromTodo(todos as List<Todo>)
         LOGGER.info("Total of todo read: ${todosJson.size()}")
         return ResponseEntity.ok(todosJson)
@@ -58,7 +58,7 @@ class TodoControllerV3 {
         int i = 0
         for(MultipartFile image : request.images) {
             LOGGER.info("File name: ${image.getOriginalFilename()}")
-            if(image.contentType.equalsIgnoreCase("image/jpg") 
+            if(image.contentType.equalsIgnoreCase("image/jpg")
                     || image.getContentType().equalsIgnoreCase("image/jpeg")
                     || image.getContentType().equalsIgnoreCase("image/png")) {
                 imageStorageService.save(image, todo.images.get(i++).path)
@@ -70,10 +70,10 @@ class TodoControllerV3 {
         }
 
         Todo savedTodo = todoService.saveTodo(todo)
-        LOGGER.info("[${savedTodo.id}] ${savedTodo.task} todo saved with ${savedTodo.images.size()} images")
+        LOGGER.info("[${savedTodo.id}] todo saved with ${savedTodo.images.size()} images")
         return ResponseEntity.created().body(TodoConverter.renderFromTodo(savedTodo))
     }
-    
+
     @GetMapping("/{todoId}")
     @CrossOrigin(origins = "http://localhost:3000")
     ResponseEntity<ResponseTodo> show(@PathVariable Integer todoId) {
@@ -84,7 +84,7 @@ class TodoControllerV3 {
         }
         return ResponseEntity.ok(TodoConverter.renderFromTodo(todo))
     }
-    
+
     @DeleteMapping
     @CrossOrigin(origins = "http://localhost:3000")
     ResponseEntity<ResponseTodo> delete(@RequestParam("id") Integer todoId) {
