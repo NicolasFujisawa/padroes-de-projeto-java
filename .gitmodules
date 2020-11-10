@@ -1,0 +1,3 @@
+[submodule "todoapp-web"]
+	path = todoapp-web
+	url = git@github.com:NicolasFujisawa/todoapp-web.git
