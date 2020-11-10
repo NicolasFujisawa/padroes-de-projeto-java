@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
@@ -91,5 +92,18 @@ class TodoControllerV3 {
         LOGGER.info("Deleting [${todoId}] todo")
         todoService.deleteTodoById(todoId)
         return ResponseEntity.noContent().build()
+    }
+
+    @PutMapping
+    @CrossOrigin(origins = "http://localhost:3000")
+    ResponseEntity<ResponseTodo> edit(@RequestParam("id") Integer todoId) {
+        LOGGER.info("Editing [${todoId}] todo")
+        Todo todo = todoService.findById(todoId)
+        if (!todo) {
+            return ResponseEntity.notFound().build()
+        }
+        todo.setIsCompleted(true)
+        todoService.saveTodo(todo)
+        return ResponseEntity.ok().build()
     }
 }
