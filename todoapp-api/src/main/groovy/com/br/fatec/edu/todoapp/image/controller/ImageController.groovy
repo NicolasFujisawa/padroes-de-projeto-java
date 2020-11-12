@@ -4,7 +4,8 @@ import com.br.fatec.edu.todoapp.image.service.ImageStorageService
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.io.Resource
-import org.springframework.http.HttpHeaders
+import org.springframework.http.MediaType
+import org.springframework.http.MediaTypeFactory
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
@@ -19,12 +20,14 @@ class ImageController {
     @Autowired
     ImageStorageService imageStorageService
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "*")
     @GetMapping("/files/{filename:.+}")
     ResponseEntity<Resource> getFile(@PathVariable String filename) {
         Resource file = imageStorageService.load(filename)
         return ResponseEntity.ok()
-            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file)
+                .contentLength(file.getFile().length())
+                .contentType(MediaTypeFactory.getMediaType(file).orElse(MediaType.APPLICATION_OCTET_STREAM))
+                .body(file)
     }
-    
+
 }

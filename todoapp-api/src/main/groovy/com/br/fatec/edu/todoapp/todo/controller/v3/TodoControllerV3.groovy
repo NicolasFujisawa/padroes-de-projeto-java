@@ -42,7 +42,7 @@ class TodoControllerV3 {
     ImageStorageService imageStorageService
 
     @GetMapping
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "*")
     ResponseEntity<Object> list(@RequestParam("page") Integer page, @RequestParam("size") Integer size) {
         LOGGER.info("Listing todos in page")
         Page<Todo> todos = todoService.findAll(PageRequest.of(page, size, Sort.by("id").descending()))
@@ -52,7 +52,7 @@ class TodoControllerV3 {
     }
 
     @PostMapping
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "*")
     ResponseEntity<ResponseTodo> create(@ModelAttribute RequestTodo request) {
         LOGGER.info("Creating ${request.task} todo")
         Todo todo = TodoConverter.renderFromJson(request)
@@ -76,7 +76,7 @@ class TodoControllerV3 {
     }
 
     @GetMapping("/{todoId}")
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "*")
     ResponseEntity<ResponseTodo> show(@PathVariable Integer todoId) {
         LOGGER.info("Showing [${todoId}] todo")
         Todo todo = todoService.findById(todoId)
@@ -87,7 +87,7 @@ class TodoControllerV3 {
     }
 
     @DeleteMapping
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "*")
     ResponseEntity<ResponseTodo> delete(@RequestParam("id") Integer todoId) {
         LOGGER.info("Deleting [${todoId}] todo")
         todoService.deleteTodoById(todoId)
@@ -95,7 +95,7 @@ class TodoControllerV3 {
     }
 
     @PutMapping
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "*")
     ResponseEntity<ResponseTodo> edit(@RequestParam("id") Integer todoId) {
         LOGGER.info("Editing [${todoId}] todo")
         Todo todo = todoService.findById(todoId)
